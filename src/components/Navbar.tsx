@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
             <ul className='flex mx-4 items-center'>
                 <Link to="/"><li className={addStyleToLink(location.pathname === "/")}>Home</li></Link>
                 <Link to="about"><li className={addStyleToLink(location.pathname === "/about")}>About</li></Link>
-                <Link to="add_item"><li className={addStyleToLink(location.pathname === "/add_item")}>Add item</li></Link>
+                <Link to="add_item"><li className={addStyleToLink(location.pathname === "/add_item")}>Items</li></Link>
             </ul>
         </div>
     )
