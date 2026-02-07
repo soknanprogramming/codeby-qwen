@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SideBar from "../components/AddItem/SideBar";
+import SideBar from "../components/Items/SideBar";
 import useItems from "../stores/useItems";
 
 const AddItem: React.FC = () => {
