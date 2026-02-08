@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
             <ul className='flex mx-4 items-center'>
                 <Link to="/"><li className={addStyleToLink(location.pathname === "/")}>Home</li></Link>
                 <Link to="about"><li className={addStyleToLink(location.pathname === "/about")}>About</li></Link>
-                <Link to="add_item"><li className={addStyleToLink(location.pathname === "/add_item")}>Items</li></Link>
+                <Link to="add_item"><li className={addStyleToLink((location.pathname === "/add_item") || (location.pathname === "/view_item"))}>Items</li></Link>
             </ul>
         </div>
     )
@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
 const addStyleToLink = (matchPath: boolean): string => {
     const moreStyle = "mr-0.5 p-3"
     if(matchPath) {
-        return "bg-amber-500" + ` ${moreStyle}`
+        return "bg-amber-500 hover:cursor-default" + ` ${moreStyle}`
     } else {
         return "hover:bg-amber-600" + ` ${moreStyle}`
     }
