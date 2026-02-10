@@ -1,10 +1,29 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import react_svg from '../assets/react.svg'
 import ume_png from '../assets/ume.png'
 import { Link, useLocation } from 'react-router-dom'
 
 const Navbar: React.FC = () => {
     const [showMore, setShowMore] = useState<boolean>(false)
+    const showMoreRef = useRef<HTMLDivElement>(null)
+
+    useEffect(() => {
+        function handleClickOutside(e: MouseEvent) {
+            if (showMoreRef.current && !showMoreRef.current.contains(e.target as Node)) {
+                setShowMore(false);
+            }
+        }
+
+        if (showMore) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+    }, [showMore])
+
+
     const location = useLocation()
     console.log(location.pathname);
     return (
@@ -23,7 +42,7 @@ const Navbar: React.FC = () => {
             <div className='mr-30 items-center flex h-full'>
                 <div className='h-full relative'>
                     <button onClick={() => setShowMore(!showMore)} className='bg-amber-600 h-full px-10'>More</button>
-                    <div className={(showMore ? 'flex' : 'hidden') + ' absolute bg-blue-400 mt-0.5 w-50 left-0'}>
+                    <div ref={showMoreRef} className={(showMore ? 'flex' : 'hidden') + ' absolute bg-blue-400 mt-0.5 w-50 left-0'}>
                         Hello b
                         Hello b
                         Hello b
