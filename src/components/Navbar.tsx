@@ -1,68 +1,136 @@
-import React, { useState, useEffect, useRef } from 'react'
-import react_svg from '../assets/react.svg'
-import ume_png from '../assets/ume.png'
-import { Link, useLocation } from 'react-router-dom'
+import React, { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { FaBars, FaTimes, FaCode } from "react-icons/fa";
 
 const Navbar: React.FC = () => {
-    const [showMore, setShowMore] = useState<boolean>(false)
-    const showMoreRef = useRef<HTMLDivElement>(null)
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const location = useLocation();
+    const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 20);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     useEffect(() => {
         function handleClickOutside(e: MouseEvent) {
-            if (showMoreRef.current && !showMoreRef.current.contains(e.target as Node)) {
-                setShowMore(false);
+            if (mobileMenuRef.current && !mobileMenuRef.current.contains(e.target as Node)) {
+                setMobileMenuOpen(false);
             }
         }
-
-        if (showMore) {
+        if (mobileMenuOpen) {
             document.addEventListener("mousedown", handleClickOutside);
         }
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, [mobileMenuOpen]);
 
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        }
-    }, [showMore])
+    const navLinks = [
+        { path: "/", label: "Home" },
+        { path: "/projects", label: "Projects" },
+        { path: "/about", label: "About" },
+        { path: "/contact", label: "Contact" },
+    ];
 
+    const isActive = (path: string) => {
+        if (path === "/") return location.pathname === "/";
+        return location.pathname.startsWith(path);
+    };
 
-    const location = useLocation()
-    console.log(location.pathname);
     return (
-        <div className='bg-amber-300 flex justify-between py-0.5 mt-1 border-solid border-y-2 border-amber-200'>
-            <div className='flex ml-3'>
-                <div className='items-center flex mx-2'>
-                    <Link to="/"><img src={react_svg} className='animate-spin' alt="react" /></Link>
-                    <a href="http://"><img src={ume_png} className='size-10 animate-bounce' alt="ume" /></a>
-                </div>
-                <ul className='flex mx-4 items-center'>
-                    <Link to="/"><li className={addStyleToLink(location.pathname === "/")}>Home</li></Link>
-                    <Link to="about"><li className={addStyleToLink(location.pathname === "/about")}>About</li></Link>
-                    <Link to="add_item"><li className={addStyleToLink((location.pathname === "/add_item") || (location.pathname === "/view_item"))}>Items</li></Link>
-                </ul>
-            </div>
-            <div className='mr-30 items-center flex h-full'>
-                <div className='h-full relative'>
-                    <button onClick={() => setShowMore(!showMore)} className='bg-amber-600 h-full px-10'>More</button>
-                    <div ref={showMoreRef} className={(showMore ? 'flex' : 'hidden') + ' absolute bg-blue-400 mt-0.5 w-50 left-0'}>
-                        Hello b
-                        Hello b
-                        Hello b
-                        Hello b
-                        Hello b
-                        Hello b
+        <nav
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+                isScrolled
+                    ? "bg-slate-900/95 backdrop-blur-md shadow-lg border-b border-slate-800"
+                    : "bg-transparent"
+            }`}
+        >
+            <div className="container mx-auto px-6">
+                <div className="flex items-center justify-between h-16">
+                    {/* Logo */}
+                    <Link to="/" className="flex items-center gap-3 group">
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <FaCode className="text-white" size={20} />
+                        </div>
+                        <span className="text-white font-bold text-xl hidden sm:block">
+                            Portfolio
+                        </span>
+                    </Link>
+
+                    {/* Desktop Navigation */}
+                    <div className="hidden md:flex items-center gap-2">
+                        {navLinks.map((link) => (
+                            <Link
+                                key={link.path}
+                                to={link.path}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className={`px-5 py-2 rounded-lg font-medium transition-all duration-300 ${
+                                    isActive(link.path)
+                                        ? "bg-blue-600 text-white"
+                                        : "text-slate-300 hover:text-white hover:bg-slate-800"
+                                }`}
+                            >
+                                {link.label}
+                            </Link>
+                        ))}
                     </div>
+
+                    {/* CTA Button */}
+                    <div className="hidden md:block">
+                        <a
+                            href="#contact"
+                            className="px-6 py-2.5 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/25"
+                        >
+                            Hire Me
+                        </a>
+                    </div>
+
+                    {/* Mobile Menu Toggle */}
+                    <button
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        className="md:hidden p-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-all duration-300"
+                        aria-label="Toggle menu"
+                    >
+                        {mobileMenuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+                    </button>
                 </div>
             </div>
-        </div>
-    )
-}
 
-const addStyleToLink = (matchPath: boolean): string => {
-    const moreStyle = "mr-0.5 p-3"
-    if(matchPath) {
-        return "bg-amber-500 hover:cursor-default" + ` ${moreStyle}`
-    } else {
-        return "hover:bg-amber-600" + ` ${moreStyle}`
-    }
-}
+            {/* Mobile Menu */}
+            <div
+                ref={mobileMenuRef}
+                className={`md:hidden transition-all duration-300 overflow-hidden ${
+                    mobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                }`}
+            >
+                <div className="bg-slate-900/95 backdrop-blur-md border-t border-slate-800 px-6 py-4 space-y-2">
+                    {navLinks.map((link) => (
+                        <Link
+                            key={link.path}
+                            to={link.path}
+                            onClick={() => setMobileMenuOpen(false)}
+                            className={`block px-4 py-3 rounded-lg font-medium transition-all duration-300 ${
+                                isActive(link.path)
+                                    ? "bg-blue-600 text-white"
+                                    : "text-slate-300 hover:text-white hover:bg-slate-800"
+                            }`}
+                        >
+                            {link.label}
+                        </Link>
+                    ))}
+                    <a
+                        href="#contact"
+                        className="block px-4 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-medium rounded-lg text-center mt-4"
+                    >
+                        Hire Me
+                    </a>
+                </div>
+            </div>
+        </nav>
+    );
+};
 
-export default Navbar
+export default Navbar;

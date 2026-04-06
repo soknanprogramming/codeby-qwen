@@ -16,7 +16,7 @@ export default function TestCamera() {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
         }
-      } catch (err) {
+      } catch {
         setError("Camera permission denied or not available.");
       }
     }

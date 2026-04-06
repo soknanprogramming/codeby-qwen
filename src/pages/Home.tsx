@@ -1,11 +1,14 @@
-import React from 'react'
+import React from "react";
+import Hero from "../components/Hero";
+import FeaturedProjects from "../components/FeaturedProjects";
 
 const Home: React.FC = () => {
-  return (
-    <div>
-        <h1>Home Page</h1>
-    </div>
-  )
-}
+    return (
+        <div className="flex-1">
+            <Hero />
+            <FeaturedProjects />
+        </div>
+    );
+};
 
-export default Home
+export default Home;
