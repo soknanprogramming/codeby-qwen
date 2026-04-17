@@ -1,4 +1,4 @@
-# Project Overview: Codeby Qwen Portfolio
+# Project Overview: PortfolioSite
 
 This is a modern, responsive personal portfolio website built with React 19 and TypeScript. It showcases projects, professional skills, and work experiences with a sleek, dark-themed UI and smooth animations.
 

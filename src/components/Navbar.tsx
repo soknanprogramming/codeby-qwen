@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
                             <FaCode className="text-white" size={20} />
                         </div>
                         <span className="text-white font-bold text-xl hidden sm:block">
-                            Portfolio
+                            PortfolioSite
                         </span>
                     </Link>
 
