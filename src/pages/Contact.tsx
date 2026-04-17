@@ -108,7 +108,7 @@ const Contact: React.FC = () => {
                                 <FaMapMarkerAlt className="text-blue-500" size={20} />
                                 <h3 className="text-white font-semibold">Location</h3>
                             </div>
-                            <p className="text-slate-400">Your City, Country</p>
+                            <p className="text-slate-400">Kratie, Cambodia</p>
                             <p className="text-slate-500 text-sm mt-2">Open to remote work worldwide</p>
                         </div>
                     </div>

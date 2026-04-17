@@ -74,7 +74,7 @@ const Footer: React.FC = () => {
                         <h4 className="text-white font-semibold mb-4">Get In Touch</h4>
                         <ul className="space-y-2 text-slate-400">
                             <li>soknan@gmail.com</li>
-                            <li>Your City, Country</li>
+                            <li>Kratie, Cambodia</li>
                             <li className="text-green-400 flex items-center gap-2 mt-3">
                                 <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
                                 Available for work
