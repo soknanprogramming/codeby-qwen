@@ -72,7 +72,7 @@ const Hero: React.FC = () => {
                             <FaLinkedin size={28} />
                         </a>
                         <a 
-                            href="mailto:your.email@example.com" 
+                            href="mailto:soknan@gmail.com" 
                             className="text-slate-400 hover:text-red-400 transition-colors duration-300 hover:scale-110 transform"
                             aria-label="Email"
                         >

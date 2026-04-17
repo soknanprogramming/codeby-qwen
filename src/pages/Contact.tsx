@@ -37,8 +37,8 @@ const Contact: React.FC = () => {
         {
             icon: <FaEnvelope size={24} />,
             title: "Email",
-            value: "your.email@example.com",
-            link: "mailto:your.email@example.com",
+            value: "soknan@gmail.com",
+            link: "mailto:soknan@gmail.com",
         },
         {
             icon: <FaLinkedin size={24} />,
@@ -157,7 +157,7 @@ const Contact: React.FC = () => {
                                             onChange={handleChange}
                                             required
                                             className="w-full px-4 py-3 bg-slate-900 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors duration-300"
-                                            placeholder="your.email@example.com"
+                                            placeholder="soknan@gmail.com"
                                         />
                                     </div>
                                 </div>
